@@ -30,15 +30,12 @@ exports.sendOtp = async (userEmail, otp, req, res) => {
     if (error) {
       return console.log(error);
     }
-    // console.log("Message %s sent: %s", info.messageId, info.response);
-    // res.send("Message Sent Successfully");
   });
 };
 
 exports.verifyOtp = async (req, res) => {
   const user = await userModel.findOne({ email: req.body.email });
   const token = jwt.verify(user.token, "PRANAY_SECRET_KEY");
-  // console.log(user, token);
   if (token.otp !== req.body.otp) return res.status(500).send("Otp didn't match");
 
   res.send("otp matched");
